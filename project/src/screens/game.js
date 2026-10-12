@@ -158,10 +158,12 @@ export function renderGameScreen(container) {
   };
 
   const initScanner = async (retries = 3) => {
+    if (leftScreen) return;
     try {
       await scannerManager.initialize('interactive', handleSuccessfulScan);
       document.getElementById('scannerFrame')?.classList.add('is-live');
     } catch (error) {
+      if (leftScreen) return; // left while the camera was starting: nothing to retry or report
       console.error('Scanner initialization failed:', error);
       if (retries > 0) {
         await new Promise(resolve => setTimeout(resolve, 1000));

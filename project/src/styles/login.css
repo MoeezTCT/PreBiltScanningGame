@@ -26,22 +26,18 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.25rem;
+  gap: 0.6rem;
+}
+
+/* The supplied logo is a white wordmark that spells "PreBilt", so the picture carries the
+   name (its alt text) and is the page heading; no name is typed beside it. */
+.logo-heading {
+  margin: 0;
 }
 
 .prebilt-logo {
-  width: clamp(4.25rem, 15vh, 8rem);
+  width: clamp(13rem, 62vw, 19rem);
   height: auto;
-  filter: drop-shadow(0 8px 22px rgba(8, 12, 64, 0.5));
-}
-
-.logo-text {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: var(--fs-3xl);
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.02em;
 }
 
 .logo-subtitle {
@@ -49,7 +45,7 @@
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--tct-100);
+  color: var(--purple-200);
 }
 
 .hero-tagline {
@@ -156,15 +152,11 @@
 
   .logo-container {
     align-items: flex-start;
+    gap: 0.9rem;
   }
 
   .prebilt-logo {
-    width: clamp(5.5rem, 17vh, 10rem);
-    margin-bottom: 0.5rem;
-  }
-
-  .logo-text {
-    font-size: clamp(3rem, 7vh, 4.5rem);
+    width: 21rem;
   }
 
   .hero-tagline {
@@ -207,7 +199,7 @@
   }
 
   .prebilt-logo {
-    width: 4rem;
+    width: 11rem;
   }
 }
 
@@ -226,12 +218,12 @@
     gap: 0.5rem;
   }
 
-  .prebilt-logo {
-    width: clamp(3.25rem, 10vh, 5rem);
+  .logo-container {
+    gap: 0.4rem;
   }
 
-  .logo-text {
-    font-size: 2rem;
+  .prebilt-logo {
+    width: clamp(10rem, 54vw, 13rem);
   }
 
   .hero-tagline {
@@ -254,5 +246,36 @@
 
   .login-panel .btn {
     min-height: 3rem;
+  }
+}
+
+/* A phone held sideways has well under 420px of height: trim the form so both buttons stay
+   in view without scrolling. Comes last so it wins over the rules above. */
+@media (orientation: landscape) and (max-height: 420px) and (min-width: 560px) {
+  .login-screen {
+    gap: 0.25rem;
+    padding-top: max(0.5rem, env(safe-area-inset-top));
+    padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+  }
+
+  .login-panel {
+    gap: 0.5rem;
+    padding: 0.75rem;
+  }
+
+  .login-form {
+    gap: 0.5rem;
+  }
+
+  .login-panel .field {
+    gap: 0.2rem;
+  }
+
+  .login-panel .input-wrap input {
+    min-height: 2.75rem;
+  }
+
+  .login-panel .btn {
+    min-height: 2.75rem;
   }
 }

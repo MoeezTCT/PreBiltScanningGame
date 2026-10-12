@@ -7,7 +7,7 @@
 }
 
 html {
-  background: var(--tct-900);
+  background: var(--navy-900);
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
@@ -28,7 +28,7 @@ body {
   font-size: var(--fs-md);
   line-height: 1.5;
   color: var(--text);
-  background: var(--tct-900);
+  background: var(--navy-900);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: transparent;
@@ -40,8 +40,8 @@ body.modal-open {
   overflow: hidden;
 }
 
-/* Page backdrop: the brand indigo with soft light, plus a very faint barcode motif.
-   Both are fixed pseudo-elements so they never repaint while scrolling. */
+/* Page backdrop: brand Navy with a soft Deep Purple glow at each end, plus a very faint
+   barcode motif. Both are fixed pseudo-elements so they never repaint while scrolling. */
 body::before {
   content: '';
   position: fixed;
@@ -49,9 +49,9 @@ body::before {
   z-index: -2;
   pointer-events: none;
   background:
-    radial-gradient(60rem 36rem at 88% -12%, rgba(121, 134, 203, 0.34), transparent 62%),
-    radial-gradient(48rem 34rem at -8% 108%, rgba(57, 73, 171, 0.5), transparent 60%),
-    linear-gradient(165deg, var(--tct-900) 0%, #19207a 55%, #141a68 100%);
+    radial-gradient(60rem 36rem at 88% -12%, rgba(111, 108, 208, 0.42), transparent 62%),
+    radial-gradient(48rem 34rem at -8% 108%, rgba(59, 57, 132, 0.8), transparent 62%),
+    linear-gradient(165deg, var(--navy-900) 0%, #121646 55%, #15184c 100%);
 }
 
 body::after {
@@ -127,7 +127,7 @@ button {
 }
 
 ::selection {
-  background: var(--tct-300);
+  background: var(--purple-500);
   color: var(--white);
 }
 

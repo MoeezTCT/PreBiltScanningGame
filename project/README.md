@@ -72,7 +72,8 @@ npm test
 ```
 
 Covers the state rules, auth, the HTTP API (including concurrent writers), the Netlify Blobs
-adapter against the real SDK client, and the client outbox.
+adapter against the real SDK client, the client outbox, and the rules that decide when a barcode
+read counts as a scan (`tests/scan-filter.test.mjs`).
 
 ## Deploy to Netlify
 
@@ -140,11 +141,41 @@ that domain is moved to this project. Deploy from the `project` folder, because 
 1. **Export to Excel** (names, emails, times, and everyone who registered).
 2. **Clear Leaderboard** to wipe the data for all devices.
 
+## Barcode scanning
+
+Each box label is read from the handheld's camera by [ZXing](https://github.com/zxing-cpp/zxing-cpp)
+compiled to WebAssembly (`zxing-wasm`). It is fetched the first time a game starts and kept by the
+offline worker. It replaced the previous decoder (Quagga), which invented numbers: pointed at a
+Code 128 label, or even at plain stripes, its EAN readers returned made-up 8-digit values, and since
+every different value counted as a new box, one label could be "scanned" again and again.
+
+How a box counts (`src/utils/scanFilter.js`, tuned in `src/config/scanner.js`):
+
+- **Confirmed.** The same value must be read 3 times within 2 seconds, and at least twice as often
+  as anything else read at that moment. A stray misread is different every time, so it never counts.
+- **Once.** A value that already counted never counts again in that game, however long the camera
+  stays on it (the player sees "Already scanned. Try another box."). Every game starts empty.
+- **Paced.** After a box counts, reads are ignored for 0.7 seconds.
+- Values are never compared for likeness, because box labels are often sequential
+  (`TCT-abc-0001`, `TCT-abc-0002`) and differ by one character on purpose.
+
+Reading quality: the camera is asked for 1920 x 1080; the decoder looks at the part of the picture
+the player can see about 16 times a second, using two thresholding strategies in turn (adaptive,
+then fixed; the fixed one reads blurred labels several times more often). Formats are
+`BARCODE_FORMATS` in `src/config/scanner.js` (Code 128, Code 39, EAN-13, EAN-8, UPC-A): remove any
+you do not use, since each one is another thing a pattern of stripes can be mistaken for. Dense
+labels (a Code 128 with a dozen characters has about 170 bars) read faster when printed larger.
+
+`tests/scan-filter.test.mjs` replays the original exploit (ten different wrong values from one
+label, and a 30-second noisy hold of one label) and has to keep passing.
+
 ## Design and responsive layout
 
-The look is built on the TCT brand: deep indigo `#1a237e` / `#283593`, white text and white
-primary buttons, and the original green / red / amber status colours. Everything else is a tint of
-that indigo. The stylesheet is split by purpose in `src/styles/`:
+The look is built on the brand palette: **Navy `#0f1436`** (primary: the page) and **Deep Purple
+`#25235a`** (secondary: panels, cards and raised surfaces), with white text and white primary
+buttons and the original green / red / amber status colours. Everything else is a tint of those
+two, so the brand lives in one place (`--navy-*` and `--purple-*` in `tokens.css`). The stylesheet
+is split by purpose in `src/styles/`:
 
 | File | What it holds |
 | --- | --- |
@@ -153,6 +184,10 @@ that indigo. The stylesheet is split by purpose in `src/styles/`:
 | `components.css` | Buttons, form fields, panels, status pill, avatars, skeletons |
 | `login.css`, `game.css`, `leaderboard.css`, `modal.css` | One file per screen / dialog |
 
+- **Logo**: `public/prebilt-logo.png` is the supplied white wordmark (486 x 105, transparent). It
+  already spells "PreBilt", so it is the page heading with `alt="PreBilt"` and no name is typed beside
+  it (`src/components/Logo.js`). The favicon and app icons use its emblem, traced to a vector
+  (the path inside `public/favicon.svg`), so they stay sharp at every size.
 - **Fonts** (Space Grotesk for headings and every number, DM Sans for text) are bundled with the app,
   so they load on venue Wi-Fi and nothing is requested from a font CDN.
 - **Breakpoints** (mobile-first): handheld / phone below 600 px, tablet 600-899 px, laptop and
@@ -186,7 +221,7 @@ never in the middle of a game.
 | Piece | Where |
 | --- | --- |
 | Manifest (name, colours, icons, shortcuts, install-dialog screenshots) | `public/manifest.webmanifest` |
-| Icons: the logo on TCT indigo, plus maskable, monochrome and iOS versions | `public/icons/` |
+| Icons: the emblem on navy and purple, plus maskable, monochrome and iOS versions | `public/icons/` |
 | Install-dialog screenshots (re-take them if the design changes) | `public/screenshots/` |
 | Offline worker template, and the build step that fills it in (`dist/sw.js`) | `build/sw-template.js`, `build/pwa-plugin.mjs` |
 | Install button, update notice, registration | `src/utils/pwa.js`, `src/components/UpdateNotice.js` |

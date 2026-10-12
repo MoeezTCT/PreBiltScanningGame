@@ -28,25 +28,13 @@
   text-align: center;
 }
 
+/* The header brand: the wordmark with the tagline under it. */
 .logo-container--compact {
-  flex-direction: row;
-  gap: 0.75rem;
+  gap: 0.35rem;
 }
 
 .logo-container--compact .prebilt-logo {
-  width: 3rem;
-}
-
-.logo-words {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.15rem;
-  text-align: left;
-}
-
-.logo-container--compact .logo-text {
-  font-size: 1.5rem;
+  width: 9.5rem;
 }
 
 .logo-container--compact .logo-subtitle {
@@ -71,8 +59,8 @@
   padding: 1rem 1.25rem;
   border: 1px solid rgba(255, 224, 130, 0.55);
   border-radius: var(--radius-lg);
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.06));
-  box-shadow: var(--shadow-1);
+  background: var(--panel-fill);
+  box-shadow: var(--shadow-1), 0 0 28px rgba(255, 179, 0, 0.12);
   animation: pop-in 0.5s var(--ease-out) both;
 }
 
@@ -91,7 +79,7 @@
   height: 3rem;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--gold-1), var(--gold-2));
-  color: var(--tct-900);
+  color: var(--navy-900);
 }
 
 .result-title {
@@ -248,7 +236,7 @@
   padding: 1.1rem 0.75rem 1rem;
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.05));
+  background: var(--panel-fill);
   box-shadow: var(--shadow-1);
   text-align: center;
 }
@@ -258,11 +246,13 @@
   --m2: var(--gold-2);
   padding-top: 1rem;
   padding-bottom: 1.5rem;
-  border-color: rgba(255, 224, 130, 0.6);
-  background: linear-gradient(180deg, rgba(255, 224, 130, 0.26), rgba(255, 255, 255, 0.05));
+  border-color: rgba(255, 224, 130, 0.65);
+  /* Gold lives in the border, medal and glow: a gold wash over purple would go muddy. */
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0) 55%), var(--panel-fill);
   box-shadow:
-    0 0 0 1px rgba(255, 224, 130, 0.18),
-    0 16px 40px rgba(8, 12, 64, 0.5);
+    0 0 0 1px rgba(255, 224, 130, 0.2),
+    0 0 36px rgba(255, 179, 0, 0.16),
+    0 16px 40px rgba(3, 5, 22, 0.6);
 }
 
 .podium-card.place-3 {
@@ -293,11 +283,11 @@
   height: 2.75rem;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--m1), var(--m2));
-  box-shadow: 0 6px 16px rgba(8, 12, 64, 0.35);
+  box-shadow: 0 6px 16px rgba(3, 5, 22, 0.5);
   font-family: var(--font-display);
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--tct-900);
+  color: var(--navy-900);
 }
 
 .podium-name {
@@ -431,7 +421,7 @@
 .board-row.rank-2 .rank-badge,
 .board-row.rank-3 .rank-badge {
   border: 0;
-  color: var(--tct-900);
+  color: var(--navy-900);
 }
 
 .board-row.rank-1 .rank-badge {
@@ -447,13 +437,13 @@
 }
 
 .board-row.rank-1 td {
-  border-color: rgba(255, 224, 130, 0.45);
-  background: rgba(255, 224, 130, 0.14);
+  border-color: rgba(255, 224, 130, 0.5);
 }
 
+/* "You" is a brighter brand purple with a white outline (white over purple turns grey). */
 .board-row.is-you td {
   border-color: var(--white);
-  background: rgba(255, 255, 255, 0.2);
+  background: linear-gradient(rgba(111, 108, 208, 0.4), rgba(111, 108, 208, 0.4)), var(--surface);
 }
 
 .name-wrap {
@@ -479,18 +469,30 @@
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--tct-900);
+  color: var(--navy-900);
 }
 
 /* A result that just arrived glows briefly so people notice it on the big screen. */
-.board-row.is-new td,
-.podium-card.is-new {
+.board-row.is-new td {
   animation: arrive 1.8s ease-out both;
+}
+
+/* Podium cards are near-opaque purple, so they flash a gold ring instead of a fill. */
+.podium-card.is-new {
+  animation: arrive-card 1.8s ease-out both;
 }
 
 @keyframes arrive {
   from {
     background-color: rgba(255, 224, 130, 0.5);
+  }
+}
+
+@keyframes arrive-card {
+  from {
+    box-shadow:
+      0 0 0 3px rgba(255, 224, 130, 0.85),
+      0 0 44px rgba(255, 179, 0, 0.55);
   }
 }
 
@@ -524,7 +526,7 @@
 }
 
 .empty-state .icon {
-  color: var(--tct-200);
+  color: var(--purple-300);
 }
 
 .empty-title {
@@ -602,6 +604,7 @@
 
   .board-hero .logo-container {
     grid-area: brand;
+    align-items: flex-start;
     justify-self: start;
   }
 
@@ -648,6 +651,11 @@
 
   .board-hero .board-title {
     font-size: 2.25rem;
+  }
+
+  /* On a big screen the logo is the brand moment, so it is larger than on a phone. */
+  .logo-container--compact .prebilt-logo {
+    width: 12rem;
   }
 
   .board-grid {

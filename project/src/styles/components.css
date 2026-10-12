@@ -84,15 +84,15 @@
 
 .btn-primary {
   --btn-bg: var(--white);
-  --btn-fg: var(--tct-900);
+  --btn-fg: var(--navy-900);
   --btn-border: var(--white);
-  box-shadow: 0 8px 22px rgba(8, 12, 64, 0.35);
+  box-shadow: 0 8px 22px rgba(3, 5, 22, 0.45);
 }
 
 .btn-primary:hover {
-  --btn-bg: var(--tct-50);
-  --btn-border: var(--tct-50);
-  box-shadow: 0 12px 28px rgba(8, 12, 64, 0.45);
+  --btn-bg: var(--purple-50);
+  --btn-border: var(--purple-50);
+  box-shadow: 0 12px 28px rgba(3, 5, 22, 0.55);
 }
 
 .btn-secondary:hover {
@@ -166,7 +166,7 @@
 
 .icon-btn[aria-pressed='true'] {
   background: var(--white);
-  color: var(--tct-900);
+  color: var(--navy-900);
 }
 
 /* Pill-shaped button with an icon and a label. */
@@ -214,7 +214,7 @@
   padding: 1.25rem;
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.06));
+  background: var(--panel-fill);
   box-shadow: var(--shadow-1);
 }
 
@@ -254,7 +254,7 @@
   top: 50%;
   left: 0.95rem;
   translate: 0 -50%;
-  color: var(--tct-200);
+  color: var(--purple-300);
   pointer-events: none;
 }
 
@@ -263,7 +263,8 @@
   width: 100%;
   min-height: var(--control-h);
   padding: 0.7rem 1rem;
-  border: 1.5px solid rgba(255, 255, 255, 0.24);
+  /* The outline is what shows where a field is, so it clears 3:1 against the purple panel. */
+  border: 1.5px solid rgba(255, 255, 255, 0.42);
   border-radius: var(--radius-md);
   background: rgba(255, 255, 255, 0.08);
   color: var(--white);
@@ -279,12 +280,12 @@
 }
 
 input::placeholder {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.62);
 }
 
 .input-wrap input:hover,
 .settings-form input:hover {
-  border-color: rgba(255, 255, 255, 0.4);
+  border-color: rgba(255, 255, 255, 0.62);
 }
 
 .input-wrap input:focus,
@@ -304,7 +305,7 @@ input:-webkit-autofill,
 input:-webkit-autofill:focus {
   -webkit-text-fill-color: var(--white);
   caret-color: var(--white);
-  box-shadow: 0 0 0 100px var(--tct-800) inset;
+  box-shadow: 0 0 0 100px var(--purple-800) inset;
   transition: background-color 9999s ease-out;
 }
 
@@ -401,7 +402,7 @@ input:-webkit-autofill:focus {
 /* ---- Avatars ----------------------------------------------------------------------- */
 
 .avatar {
-  --avatar-bg: var(--tct-500);
+  --avatar-bg: var(--purple-500);
   display: inline-grid;
   place-items: center;
   flex: none;
@@ -425,24 +426,25 @@ input:-webkit-autofill:focus {
   font-size: 0.75rem;
 }
 
-/* Brand-friendly hues, all dark enough for white initials (4.5:1 or better). */
+/* Six hues that sit well on navy and purple (violet, blue, teal, orchid, rose, cyan), each
+   dark enough for white initials (4.5:1 or better). */
 .avatar--0 {
-  --avatar-bg: #3f51b5;
+  --avatar-bg: #6146ce;
 }
 .avatar--1 {
-  --avatar-bg: #1976d2;
+  --avatar-bg: #2473db;
 }
 .avatar--2 {
-  --avatar-bg: #00796b;
+  --avatar-bg: #0f8377;
 }
 .avatar--3 {
-  --avatar-bg: #8e24aa;
+  --avatar-bg: #b544bd;
 }
 .avatar--4 {
-  --avatar-bg: #673ab7;
+  --avatar-bg: #d13b6d;
 }
 .avatar--5 {
-  --avatar-bg: #0277bd;
+  --avatar-bg: #0b7ea8;
 }
 
 /* ---- Loading placeholders ---------------------------------------------------------- */
@@ -494,7 +496,7 @@ input:-webkit-autofill:focus {
   padding: 0.3rem 0.35rem 0.3rem 1.1rem;
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-pill);
-  background: rgba(13, 18, 82, 0.95);
+  background: rgba(37, 35, 90, 0.97);
   box-shadow: var(--shadow-2);
   font-size: var(--fs-sm);
   font-weight: 600;

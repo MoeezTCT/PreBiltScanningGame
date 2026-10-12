@@ -1,28 +1,30 @@
 /* Design tokens.
-   The TCT brand colours are unchanged from the original app:
-     --tct-900  #1a237e  primary (page background)
-     --tct-800  #283593  secondary
-   plus white for text and primary buttons, and the original green / red status colours.
-   Everything else is a tint or shade of that same indigo (the Material "indigo" ramp). */
+   Brand palette (client brief):
+     --navy-900    #0f1436  PRIMARY    page background, and the text colour on white buttons
+     --purple-800  #25235a  SECONDARY  panels, cards and raised surfaces
+   plus white for text and primary buttons, the green / red / amber status colours and the
+   gold / silver / bronze rank medals. Everything else is a tint or shade of the two brand
+   colours (a ramp that keeps their blue-violet hue), so change the brand here and nowhere else. */
 
 :root {
   color-scheme: dark;
 
-  /* ---- TCT brand ------------------------------------------------------------------ */
-  --tct-950: #0d1252;
-  --tct-900: #1a237e;
-  --tct-800: #283593;
-  --tct-700: #303f9f;
-  --tct-600: #3949ab;
-  --tct-500: #3f51b5;
-  --tct-400: #5c6bc0;
-  --tct-300: #7986cb;
-  --tct-200: #9fa8da;
-  --tct-100: #c5cae9;
-  --tct-50: #e8eaf6;
+  /* ---- Brand: Navy (primary) and Deep Purple (secondary), with tints and shades ----- */
+  --navy-950: #090c25; /* deepest: the camera well, shadows */
+  --navy-900: #0f1436; /* PRIMARY */
+  --navy-800: #161846; /* between the two brand colours: gradient mid-stops */
+  --purple-800: #25235a; /* SECONDARY */
+  --purple-700: #302e72;
+  --purple-600: #3b3984;
+  --purple-500: #4c49a2;
+  --purple-400: #6f6cd0; /* glows and large shapes only: 4:1 on navy, below the 4.5:1 text needs */
+  --purple-300: #9694e6; /* accent icons and text */
+  --purple-200: #bfbdf4;
+  --purple-100: #dcdbfb;
+  --purple-50: #efeffd;
   --white: #ffffff;
 
-  /* ---- Status (original colours, plus lighter tints for TEXT on indigo) ----------- */
+  /* ---- Status (original colours, plus lighter tints for TEXT on the dark brand) ----- */
   --success: #4caf50;
   --success-soft: #81c784;
   --error: #f44336;
@@ -39,11 +41,16 @@
   --bronze-2: #d9904a;
 
   /* ---- Surfaces and text ---------------------------------------------------------- */
-  --surface: rgba(255, 255, 255, 0.08);
-  --surface-raised: rgba(255, 255, 255, 0.12);
-  --surface-hover: rgba(255, 255, 255, 0.18);
+  /* Cards, rows and pills are Deep Purple, slightly see-through so the glow of the page
+     backdrop shows through. Buttons and badges step up through the purple ramp. */
+  --surface: rgba(37, 35, 90, 0.72);
+  --surface-raised: rgba(59, 57, 132, 0.66);
+  --surface-hover: rgba(76, 73, 162, 0.74);
+  --panel-fill: linear-gradient(180deg, rgba(48, 46, 114, 0.92), rgba(37, 35, 90, 0.92));
   --border: rgba(255, 255, 255, 0.16);
   --border-strong: rgba(255, 255, 255, 0.34);
+  /* Opaque bottom of dialogs; the sticky footer fades into the same colour. */
+  --sheet-bottom: #1f1e4e;
 
   --text: #ffffff;
   --text-2: rgba(255, 255, 255, 0.8);
@@ -67,9 +74,11 @@
   --radius-xl: 1.75rem;
   --radius-pill: 999px;
 
-  --shadow-1: 0 4px 14px rgba(8, 12, 64, 0.28);
-  --shadow-2: 0 14px 40px rgba(8, 12, 64, 0.42);
-  --shadow-glow: 0 0 0 1px rgba(255, 255, 255, 0.12), 0 10px 30px rgba(8, 12, 64, 0.45);
+  /* The page is already dark, so shadows are near-black navy and lean on a hairline
+     highlight along the top edge for depth. */
+  --shadow-1: 0 4px 14px rgba(3, 5, 22, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  --shadow-2: 0 14px 40px rgba(3, 5, 22, 0.6);
+  --shadow-glow: 0 0 0 1px rgba(255, 255, 255, 0.12), 0 10px 30px rgba(3, 5, 22, 0.6);
 
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --t-fast: 150ms;

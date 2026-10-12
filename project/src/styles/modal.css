@@ -8,7 +8,7 @@
   display: none;
   align-items: flex-end;
   justify-content: center;
-  background: rgba(8, 12, 64, 0.74);
+  background: rgba(4, 6, 24, 0.78);
 }
 
 @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
@@ -43,7 +43,7 @@
   border: 1px solid var(--border-strong);
   border-bottom: 0;
   border-radius: var(--radius-xl) var(--radius-xl) 0 0;
-  background: linear-gradient(180deg, var(--tct-800), #222c8a);
+  background: linear-gradient(180deg, var(--purple-800), var(--sheet-bottom));
   box-shadow: var(--shadow-2);
   animation: sheet-in var(--t-slow) var(--ease-out) both;
 }
@@ -101,7 +101,7 @@
   bottom: calc(-1.25rem - env(safe-area-inset-bottom));
   margin: 0 -1.25rem calc(-1.25rem - env(safe-area-inset-bottom));
   padding: 1rem 1.25rem calc(1.25rem + env(safe-area-inset-bottom));
-  background: linear-gradient(to top, #222c8a 68%, transparent);
+  background: linear-gradient(to top, var(--sheet-bottom) 68%, transparent);
 }
 
 .sequence-list {

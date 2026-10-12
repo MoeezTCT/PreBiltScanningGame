@@ -5,6 +5,7 @@ import { renderAdminLoginModal } from '../components/AdminLogin.js';
 import { authenticateAdmin, clearAdminSession, isAdminLoggedIn } from '../utils/auth.js';
 import { closeModal, openModal, prepareModal } from '../utils/modal.js';
 import { canInstall, onInstallAvailabilityChange, promptInstall } from '../utils/pwa.js';
+import { preloadScanner } from '../utils/scannerManager.js';
 
 export function renderLoginScreen(container) {
   const isAdmin = isAdminLoggedIn();
@@ -133,6 +134,9 @@ export function renderLoginScreen(container) {
     await promptInstall();
     syncInstallButton();
   });
+
+  // A player is about to open the camera: fetch the barcode decoder while they type.
+  if (!isAdmin) preloadScanner();
 
   // Regular form handlers
   const form = document.getElementById('loginForm');
